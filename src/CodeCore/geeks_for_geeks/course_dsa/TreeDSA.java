@@ -76,8 +76,13 @@ public class TreeDSA {
 
 
     static class BTNode {
-        private BTNode left, right;
+        static Integer maxLevel = 0;
         Integer data;
+        private BTNode left, right;
+
+        public BTNode(Integer data) {
+            this.data = data;
+        }
 
         public static BTNode createChildSumBinaryTree() {
             BTNode root = new BTNode(20);
@@ -89,8 +94,6 @@ public class TreeDSA {
             root.right.right = new BTNode(5);
             return root;
         }
-
-        static Integer maxLevel = 0;
 
         static void printLeftView(BTNode head) {
             printLeftView(head, 1);
@@ -158,35 +161,55 @@ public class TreeDSA {
             return root;
         }
 
-        public static Integer getMaxWidth(BTNode root) {
-            Queue<BTNode> levels = new LinkedList<>();
-            if (root == null) return -1;
-            int maxWidth = -1;
-            levels.add(root);
-            while(!levels.isEmpty()){
-                int count = levels.size();
-                if(count > maxWidth) maxWidth = count;
-                for(int i = 0; i < count; i++){
-                    BTNode node = levels.poll();
-                    if(node.left != null) levels.add(node.left);
-                    if(node.right != null) levels.add(node.right);
-                }
-            }
-            return maxWidth;
-        }
-
 /*        public static BTNode convertToDOublyLinkedListInOrder(BTNode head) {
             if(head == null) return null;
             Queue<BTNode> q = new LinkedList<>();
             BTNode node = head;
         }*/
 
-        public Integer getData() {
-            return data;
+        public static Integer getMaxWidth(BTNode root) {
+            Queue<BTNode> levels = new LinkedList<>();
+            if (root == null) return -1;
+            int maxWidth = -1;
+            levels.add(root);
+            while (!levels.isEmpty()) {
+                int count = levels.size();
+                if (count > maxWidth) maxWidth = count;
+                for (int i = 0; i < count; i++) {
+                    BTNode node = levels.poll();
+                    if (node.left != null) levels.add(node.left);
+                    if (node.right != null) levels.add(node.right);
+                }
+            }
+            return maxWidth;
         }
 
-        public BTNode(Integer data) {
-            this.data = data;
+        public static Integer getSize(BTNode root) {
+            if (root == null) return 0;
+            else return 1 + getSize(root.left) + getSize(root.right);
+        }
+
+        public static Integer getMax(BTNode root) {
+            if (root == null) return Integer.MIN_VALUE;
+            else return max(root.data, max(getMax(root.left), getMax(root.right)));
+        }
+
+        public static Integer getHeight(BTNode root) {
+            if (root == null) return 0;
+            else return 1 + max(getHeight(root.left), getHeight(root.right));
+        }
+
+        public static void printAtKLevel(BTNode root, int k) {
+            if (root == null) return;
+            if (k == 0) System.out.print(root.data + " ");
+            else {
+                printAtKLevel(root.left, k - 1);
+                printAtKLevel(root.right, k - 1);
+            }
+        }
+
+        public Integer getData() {
+            return data;
         }
 
         public void insert(Integer data) {
@@ -243,30 +266,6 @@ public class TreeDSA {
                     System.out.print(curr.data + " ");
                 }
                 System.out.println();
-            }
-        }
-
-        public static Integer getSize(BTNode root) {
-            if (root == null) return 0;
-            else return 1 + getSize(root.left) + getSize(root.right);
-        }
-
-        public static Integer getMax(BTNode root) {
-            if (root == null) return Integer.MIN_VALUE;
-            else return max(root.data, max(getMax(root.left), getMax(root.right)));
-        }
-
-        public static Integer getHeight(BTNode root) {
-            if (root == null) return 0;
-            else return 1 + max(getHeight(root.left), getHeight(root.right));
-        }
-
-        public static void printAtKLevel(BTNode root, int k) {
-            if (root == null) return;
-            if (k == 0) System.out.print(root.data + " ");
-            else {
-                printAtKLevel(root.left, k - 1);
-                printAtKLevel(root.right, k - 1);
             }
         }
     }

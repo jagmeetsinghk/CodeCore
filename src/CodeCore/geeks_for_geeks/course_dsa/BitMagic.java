@@ -23,11 +23,11 @@ public class BitMagic {
         System.out.println(swapOddAndEvenBits(23));
     }
 
-    private static int swapOddAndEvenBits(int n){
+    private static int swapOddAndEvenBits(int n) {
         int allEvenSet = -1431655766, allOddSet = 1431655765;
         int allEven = n & allEvenSet, allOdd = n & allOddSet;
         allEven >>>= 1;
-        allOdd <<=1;
+        allOdd <<= 1;
         return allOdd ^ allEven;
     }
 
@@ -35,7 +35,7 @@ public class BitMagic {
 
     }*/
 
-    private static int binaryToGrey(int n){
+    private static int binaryToGrey(int n) {
         if (n == 0) return 0;
         int msb = (int) Math.floor(log10(n) / log10(2));
         int xorer = (int) Math.pow(2, msb) - 1;
@@ -48,7 +48,7 @@ public class BitMagic {
             maxCount++;
             x = x >> 1;
         }
-        return maxCount*2;
+        return maxCount * 2;
     }
 
     private static boolean isSparse(int n) {
