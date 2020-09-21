@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//https://www.hackerrank.com/challenges/sherlock-and-valid-string/problem
 public class SherlockAndTheValidString {
 
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,23 +19,33 @@ public class SherlockAndTheValidString {
 
     static String isValid(String s) {
         HashMap<Character, Integer> charFreq = new HashMap<>();
+        HashMap<Integer, Integer> freqMap = new HashMap<>();
         s.chars().forEach(c -> {
-            Integer currentFreq = charFreq.putIfAbsent((char) c, 0);
-            charFreq.put((char) c, currentFreq == null ? 1 : currentFreq + 1);
+            Character key = (char) c;
+            Integer val = charFreq.get(key);
+            if (val == null) {
+                charFreq.put(key, 1);
+                freqMap.putIfAbsent(1, 0);
+                freqMap.computeIfPresent(1, (k, v) -> v + 1);
+            } else {
+                charFreq.put(key, val + 1);
+                freqMap.computeIfPresent(val, (k, v) -> v - 1);
+                freqMap.putIfAbsent(val + 1, 0);
+                freqMap.computeIfPresent(val + 1, (k, v) -> v + 1);
+            }
         });
-
-        System.out.println(charFreq);
 
         List<Integer> distinctFreq = charFreq.values().stream().distinct().collect(Collectors.toList());
         int distinctCount = distinctFreq.size();
-        if (distinctCount <= 1)
-            return "YES";
-        else if (distinctCount > 2)
+        if (distinctCount > 2)
             return "NO";
-        else if ((Math.abs(distinctFreq.get(0) - distinctFreq.get(1)) == 1
-                || distinctFreq.stream().anyMatch(f -> (f == 1 && distinctFreq.stream().anyMatch(f1 -> charFreq.values().stream().filter(v -> v == f1).count() == 1)))
-        ) && distinctFreq.stream().anyMatch(f -> charFreq.values().stream().filter(v -> v == f).count() == 1))
+        else if (distinctCount == 1) {
             return "YES";
-        else return "NO";
+        } else {
+            if ((freqMap.getOrDefault(1, 0) == 0 && Math.abs(distinctFreq.get(0) - distinctFreq.get(1)) != 1)
+                    || freqMap.get(1) > 1)
+                return "NO";
+            else return "YES";
+        }
     }
 }
