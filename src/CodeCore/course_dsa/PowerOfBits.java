@@ -4,22 +4,45 @@ import java.util.stream.IntStream;
 
 import static java.lang.Math.log10;
 
-public class BitMagic {
+public class PowerOfBits {
     public static void main(String[] args) {
 
+        System.out.println("-------------------Find first Set Bit-------------------------------");
         System.out.println(findFirstSetBit(32));
+
+        System.out.println("-------------------Find right most different bit-------------------");
         System.out.println(findRightmostDifferentBit(11, 9));
+
+        System.out.println("-------------------Check Kth bit------------------------------------");
         System.out.println(checkKthBit(4, 0));
+
+        System.out.println("-------------------Count set bits-----------------------------------");
         System.out.println(countSetBits(5));
+
+        System.out.println("-------------------Count set bits till N----------------------------");
         System.out.println(countSetBitsTillN(17));
+
+        System.out.println("-------------------Integer to binary--------------------------------");
         IntStream.range(0, 18).forEach(i -> System.out.print(Integer.toBinaryString(i) + " - "));
         System.out.println();
+
+        System.out.println("-------------------Count bits flip----------------------------------");
         System.out.println(countBitsFlip(10, 20));
+
+        System.out.println("-------------------Check if number is sparse------------------------");
         System.out.println(isSparse(5));
+
+        System.out.println("-------------------Maximum consecutive set bits---------------------");
         System.out.println(maxConsecutiveOnes(14));
+
+        System.out.println("--------------------------------------------------------------------");
         System.out.println(maxConsecutiveOnes(222));
+
+        System.out.println("-------------------Binary to grey conversion------------------------");
         System.out.println(binaryToGrey(7));
         System.out.println(binaryToGrey(10));
+
+        System.out.println("-------------------Swap odd and even bits---------------------------");
         System.out.println(swapOddAndEvenBits(23));
     }
 
