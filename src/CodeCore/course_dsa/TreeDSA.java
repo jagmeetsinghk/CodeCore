@@ -1,4 +1,4 @@
-package CodeCore.geeks_for_geeks.course_dsa;
+package CodeCore.course_dsa;
 
 import java.util.LinkedList;
 import java.util.Queue;
